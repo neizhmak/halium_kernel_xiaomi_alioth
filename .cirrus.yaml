@@ -1,5 +1,5 @@
 container:
-  image: quay.io/droidian/build-essential:bookworm-amd64
+  image: quay.io/droidian/build-essential:trixie-amd64
   cpu: 2
   memory: 4G
 env:
