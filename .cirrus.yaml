@@ -1,7 +1,7 @@
 container:
   image: quay.io/droidian/build-essential:bookworm-amd64
-  cpu: 1
-  memory: 1G
+  cpu: 2
+  memory: 4G
 env:
   KERNEL_SOURCE: "https://github.com/LineageOS/android_kernel_xiaomi_sm8250 -b lineage-18.1"
   PACKAGES_DIR: "/tmp/cirrus-ci-build/packages"
@@ -14,7 +14,6 @@ build_task:
   preparation_script:
     - apt install -y linux-packaging-snippets
     - cp -v /usr/share/linux-packaging-snippets/kernel-info.mk.example ./kernel-info.mk
-    - exit
     - git clone -q $KERNEL_SOURCE
     - cd $KERNEL_DIR
     - cp ~/*defconfig arch/arm64/configs/
@@ -27,12 +26,10 @@ build_task:
     - chmod +x rules
     - apt update -y 1>&-
     - apt install -y linux-packaging-snippets curl 1>&-
-    - sed -i "256iln -s /usr/lib/llvm-android-*/bin/* /bin/" /bin/releng-build-package
+#    - sed -i "256iln -s /usr/lib/llvm-android-*/bin/* /bin/" /bin/releng-build-package
   build_script:
-    - exit
     - cd $KERNEL_DIR
     - debian/rules debian/control 1>&-
     - RELENG_HOST_ARCH=arm64 releng-build-package
   binaries_artifacts:
-#    path: "linux-*"
-     path: "kernel-info.mk"
+    path: "linux-*"
