@@ -12,8 +12,6 @@ env:
 
 build_task:
   preparation_script:
-    - apt install -y linux-packaging-snippets
-    - cp -v /usr/share/linux-packaging-snippets/kernel-info.mk.example ./kernel-info.mk
     - git clone -q $KERNEL_SOURCE
     - cd $KERNEL_DIR
     - cp ~/*defconfig arch/arm64/configs/
